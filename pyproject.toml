@@ -6,6 +6,9 @@ authors = ["wa101 <wadhah.mahroug15@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+opencv-python = "^4.5.5"
+jupyter = "^1.0.0"
+matplotlib = "^3.5.2"
 
 [tool.poetry.dev-dependencies]
 
