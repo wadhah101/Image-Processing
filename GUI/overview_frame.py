@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import ttk
 
+from GUI.get_image_frame import UploadFileFrame
+
 
 class OverviewFrame(ttk.Frame):
     def equalize(self):
@@ -76,3 +78,10 @@ class OverviewFrame(ttk.Frame):
         noise_button = Button(noise_frame, text='Apply noise', bg='#828282', fg='white', command=self.apply_noise,
                               padx=20)
         noise_button.grid(row=1, sticky=W)
+
+        body = LabelFrame(self, font=('Raleway', 25), width=800, height=300, bg='#3b3b3b', borderwidth=0)
+        body.grid_propagate(False)
+        body.grid(row=2)
+
+        image = UploadFileFrame(body)
+        image.grid(row=0, column=0)
