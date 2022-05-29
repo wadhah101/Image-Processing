@@ -13,6 +13,8 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
                                                NavigationToolbar2Tk)
 from matplotlib.figure import Figure
 
+from tp1 import rand_helper
+
 
 class UploadFileFrame(tk.Frame):
 
