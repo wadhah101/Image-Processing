@@ -1,8 +1,9 @@
 # %%
+import random
+
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-import random
 
 # %%
 img = cv2.imread("./cat.jpg", cv2.IMREAD_GRAYSCALE)
