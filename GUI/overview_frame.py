@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import ttk
 import numpy as np
 import random
+import cv2
+
 
 from GUI.get_image_frame import UploadFileFrame
 
@@ -18,7 +20,8 @@ def rand_helper(i):
 
 class OverviewFrame(ttk.Frame):
     def equalize(self):
-        print('equalization ..')
+        equ = cv2.equalizeHist(self.image.image)
+        self.image.set_image(equ)
 
     def linear_transform(self):
         print('linear transformation ..')
