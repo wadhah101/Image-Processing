@@ -3,6 +3,7 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 # %%
 def show_images(image : list[np.ndarray]):
     for i in image:
