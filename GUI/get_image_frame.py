@@ -43,8 +43,19 @@ class UploadFileFrame(tk.Frame):
         self.image = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
         fig, (ax) = plt.subplots(1, 1)
         fig.suptitle('Selected Image :')
-        fig.set_size_inches(5, 5)
+        fig.set_size_inches(4, 2.4)
         ax.imshow(self.image, cmap='gray', vmin=0, vmax=255)
+        canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.
+        canvas.draw()
+        canvas.get_tk_widget().grid(row=2, column=1)
+
+    def set_image(self, newimg: np.ndarray):
+        self.image = newimg
+        print("drawing new image")
+        fig, (ax) = plt.subplots(1, 1)
+        fig.suptitle('Selected Image :')
+        fig.set_size_inches(4, 2.4)
+        ax.imshow(newimg, cmap='gray', vmin=0, vmax=255)
         canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.
         canvas.draw()
         canvas.get_tk_widget().grid(row=2, column=1)
