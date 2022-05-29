@@ -1,10 +1,27 @@
-import tkinter as tk
+from tkinter import *
+from tkinter import ttk
+
+from GUI.overview_frame import OverviewFrame
+from GUI.segmentation_frame import SegmentationFrame
 
 if __name__ == '__main__':
-    root = tk.Tk()
+    root = Tk()
     root.title('Image Processor')
+    root.geometry("800x400")
 
-    canvas = tk.Canvas(root, width=800, height=400, bg='#3b3b3b')
-    canvas.grid(rowspan=4)
+    s = ttk.Style()
+    s.configure('TFrame', background='#3b3b3b')
+
+    tabs = ttk.Notebook(root)
+    tabs.pack()
+
+    overview = OverviewFrame(tabs)
+    overview.pack(fill='both', expand=1)
+
+    segmentation = SegmentationFrame(tabs)
+    segmentation.pack(fill='both', expand=1)
+
+    tabs.add(overview, text='overview')
+    tabs.add(segmentation, text='segmentation')
 
     root.mainloop()
