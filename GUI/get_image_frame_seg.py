@@ -30,7 +30,7 @@ class UploadFileSegFrame(tk.Frame):
         self.uploadFileButton = tk.Button(
             self, text='Upload Image', command=self.uploadFileCommand)
 
-        self.uploadFileButton.grid(row=1, column=1)
+        self.uploadFileButton.grid(row=0, column=0)
 
     def uploadFileCommand(self):
         self.filename = fd.askopenfilename(
@@ -43,11 +43,11 @@ class UploadFileSegFrame(tk.Frame):
         self.image = cv2.imread(self.filename)[:, :, ::-1]
         fig, (ax) = plt.subplots(1, 1)
         fig.suptitle('Selected Image :')
-        fig.set_size_inches(5, 5)
+        fig.set_size_inches(4, 4)
         ax.imshow(self.image)
         canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.
         canvas.draw()
-        canvas.get_tk_widget().grid(row=2, column=1)
+        canvas.get_tk_widget().grid(row=1, column=0)
 
 
 # root = tk.Tk()

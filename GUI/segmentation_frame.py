@@ -18,7 +18,7 @@ class SegmentationFrame(ttk.Frame):
 
         self.histogram = None
         image = UploadFileSegFrame(self)
-        image.grid(column=0)
+        image.grid(row=0, column=0)
 
         utils = SegmentationUtilsFrame(self)
-        utils.grid(column=1)
+        utils.grid(row=0, column=1)
