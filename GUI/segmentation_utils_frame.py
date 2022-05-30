@@ -1,23 +1,24 @@
-import random
-import tkinter
 from tkinter import *
-from tkinter import filedialog as fd
-from tkinter import ttk
-from tkinter.messagebox import showinfo
-
-import cv2
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.backend_bases import key_press_handler
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
-                                               NavigationToolbar2Tk)
-from matplotlib.figure import Figure
 
 
 class SegmentationUtilsFrame(Frame):
+    def update_r_slider(self, event):
+        print(int(self.r_slider.get()))
+
+    def update_g_slider(self, event):
+        print(int(self.g_slider.get()))
+
+    def update_b_slider(self, event):
+        print(int(self.b_slider.get()))
+
+    def radio_checked(self):
+        print(self.variable.get())
 
     def __init__(self, parent):
         super().__init__(parent)
+        self.b_slider = None
+        self.g_slider = None
+        self.r_slider = None
         self.variable = None
         self.create_widgets()
 
@@ -25,11 +26,18 @@ class SegmentationUtilsFrame(Frame):
         # sliders
         self.r_slider = Scale(self, from_=0, to=256, orient=HORIZONTAL)
         self.r_slider.grid(row=1)
+        
+        self.r_slider.bind("<ButtonRelease-1>", self.update_r_slider)
+
         self.g_slider = Scale(self, from_=0, to=256, orient=HORIZONTAL)
         self.g_slider.grid(row=2)
 
+        self.g_slider.bind("<ButtonRelease-1>", self.update_g_slider)
+
         self.b_slider = Scale(self, from_=0, to=256, orient=HORIZONTAL)
         self.b_slider.grid(row=3)
+
+        self.b_slider.bind("<ButtonRelease-1>", self.update_b_slider)
 
         switch_frame = LabelFrame(self)
         switch_frame.grid(row=4)
@@ -37,9 +45,9 @@ class SegmentationUtilsFrame(Frame):
         self.variable = StringVar(None, "AND")
 
         AND_button = Radiobutton(switch_frame, text="AND", variable=self.variable,
-                                 indicatoron=False, value="AND", width=8)
+                                 indicatoron=False, value="AND", width=8, command=self.radio_checked)
         OR_button = Radiobutton(switch_frame, text="OR", variable=self.variable,
-                                indicatoron=False, value="OR", width=8)
+                                indicatoron=False, value="OR", width=8, command=self.radio_checked)
 
         AND_button.grid(row=0, column=0)
         OR_button.grid(row=0, column=1)
