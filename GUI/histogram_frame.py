@@ -5,8 +5,8 @@ from tkinter import filedialog as fd
 from tkinter import ttk
 from tkinter.messagebox import showinfo
 
-import matplotlib as mpl
 import cv2
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backend_bases import key_press_handler
