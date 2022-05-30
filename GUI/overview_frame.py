@@ -3,6 +3,7 @@ from tkinter import ttk
 
 from GUI.get_image_frame import UploadFileFrame
 from GUI.histogram_frame import HistogramFrame
+from GUI.statistics import StatisticsFrame
 
 
 class OverviewFrame(ttk.Frame):
@@ -38,10 +39,15 @@ class OverviewFrame(ttk.Frame):
         self.histogram = HistogramFrame(
             self.body, image)
         self.histogram.grid(row=0, column=1)
+        self.footer = StatisticsFrame(self.body, image)
+        self.grid_propagate(False)
+        self.footer.grid(row=2)
 
     def __init__(self, root):
         super().__init__(root, width=1200, height=600)
 
+        self.histogram = None
+        self.footer = None
         header = LabelFrame(self, font=('Raleway', 25),
                             width=1200, height=100, bg='#585858')
         header.grid_propagate(False)

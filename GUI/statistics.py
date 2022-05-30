@@ -13,7 +13,8 @@ class StatisticsFrame(Frame):
     def __init__(self, parent, image: np.ndarray):
         super().__init__(parent)
 
-        footer = LabelFrame(self, font=('Raleway', 25), bg='#3b3b3b', borderwidth=0)
+        footer = LabelFrame(self, font=('Raleway', 25), bg='#3b3b3b', borderwidth=0, width=1200,
+                            height=100)
         footer.grid(column=0)
 
         right_stat = LabelFrame(footer)
@@ -30,4 +31,3 @@ class StatisticsFrame(Frame):
 
         resolution = Label(left_stat, text='000x000')
         resolution.grid(row=0)
-
