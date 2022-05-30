@@ -46,7 +46,7 @@ def extract_color_threshold(image: np.ndarray, threshold: int):
 
 def image_seuil_and(image: np.ndarray, r, g, b):
     red_channel, green_channel, blue_channel = image[:,
-                                               :, 2], image[:, :, 1], image[:, :, 0]
+                                                     :, 2], image[:, :, 1], image[:, :, 0]
     image_seuil_red = extract_color_threshold(red_channel, r)
     image_seuil_green = extract_color_threshold(green_channel, g)
     image_seuil_blue = extract_color_threshold(blue_channel, b)
@@ -57,7 +57,7 @@ def image_seuil_and(image: np.ndarray, r, g, b):
 
 def image_seuil_or(image: np.ndarray, r, g, b):
     red_channel, green_channel, blue_channel = image[:,
-                                               :, 2], image[:, :, 1], image[:, :, 0]
+                                                     :, 2], image[:, :, 1], image[:, :, 0]
     image_seuil_red = extract_color_threshold(red_channel, r)
     image_seuil_green = extract_color_threshold(green_channel, g)
     image_seuil_blue = extract_color_threshold(blue_channel, b)
@@ -66,7 +66,49 @@ def image_seuil_or(image: np.ndarray, r, g, b):
     return result.astype('uint8')
 
 
+def erosion(binary_image: np.ndarray, kernel: np.ndarray):
+    return cv2.erode(binary_image, kernel, iterations=1)
+
+
+def dilatation(binary_img: np.ndarray, kernel: np.ndarray):
+    return cv2.dilate(binary_img, kernel, iterations=1)
+
+
+def fermeture(binary_image: np.ndarray, kernel: np.ndarray):
+    return erosion(dilatation(binary_img, kernel))
+
+
+def ouverture(binary_image: np.ndarray, kernel: np.ndarray):
+    return dilatation(erosion(binary_img, kernel))
+
+
 class SegmentationUtilsFrame(Frame):
+
+    kernel = np.ones((5, 5), np.uint8)
+
+    def updateCanva(self):
+        self.ax.imshow(self.transformed_image, cmap='gray', vmin=0, vmax=255)
+        self.canvas.draw()
+
+    def erosion(self,):
+        self.transformed_image = cv2.erode(
+            self.transformed_image, self.kernel, iterations=1)
+        self.updateCanva()
+
+    def dilatation(self):
+        self.transformed_image = cv2.dilate(
+            self.transformed_image, self.kernel, iterations=1)
+        self.updateCanva()
+
+    def fermeture(slef):
+        self.erosion()
+        self.dilatation()
+        self.updateCanva()
+
+    def ouverture(self):
+        self.dilatation()
+        self.erosion()
+        self.updateCanva()
 
     def set_otsu_value(self):
         img = self.image
@@ -177,34 +219,38 @@ class SegmentationUtilsFrame(Frame):
         morph_buttons = LabelFrame(self, borderwidth=0)
         morph_buttons.grid(row=0, column=1)
 
-        erosion = Button(morph_buttons, text='erosion')
+        erosion = Button(morph_buttons, text='erosion', command=self.erosion)
         erosion.grid(row=0, column=1, pady=5)
 
-        dilatation = Button(morph_buttons, text='dilatation')
+        dilatation = Button(morph_buttons, text='dilatation',
+                            command=self.dilatation)
         dilatation.grid(row=1, column=1, pady=5)
 
-        ouverture = Button(morph_buttons, text='ouverture')
+        ouverture = Button(morph_buttons, text='ouverture',
+                           command=self.ouverture)
         ouverture.grid(row=2, column=1, pady=5)
 
-        fermeture = Button(morph_buttons, text='fermeture')
+        fermeture = Button(morph_buttons, text='fermeture',
+                           command=self.fermeture)
         fermeture.grid(row=3, column=1, pady=5)
 
-        # def uploadFileCommand(self):
-        #     self.filename = fd.askopenfilename(
-        #         title='Open a file',
-        #         initialdir='~',
-        #         filetypes=self.filetypes)
-        #     self.show_image()
+# def uploadFileCommand(self):
+#     self.filename = fd.askopenfilename(
+#         title='Open a file',
+#         initialdir='~',
+#         filetypes=self.filetypes)
+#     self.show_image()
 
-        # def show_image(self):
-        #     self.image = cv2.imread(self.filename)[:, :, ::-1]
-        #     fig, (ax) = plt.subplots(1, 1)
-        #     fig.suptitle('Selected Image :')
-        #     fig.set_size_inches(5, 5)
-        #     ax.imshow(self.image)
-        #     canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.
-        #     canvas.draw()
-        #     canvas.get_tk_widget().grid(row=2, column=1)
+# def show_image(self):
+#     self.image = cv2.imread(self.filename)[:, :, ::-1]
+#     fig, (ax) = plt.subplots(1, 1)
+#     fig.suptitle('Selected Image :')
+#     fig.set_size_inches(5, 5)
+#     ax.imshow(self.image)
+#     canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.
+#     canvas.draw()
+#     canvas.get_tk_widget().grid(row=2, column=1)
+
 
 # root = tk.Tk()
 # hc = SegmentationUtilsFrame(root)
