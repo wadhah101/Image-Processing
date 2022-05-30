@@ -37,8 +37,9 @@ class UploadFileFrame(tk.Frame):
         self.image_change_hanlder = image_change_hanlder
 
     def createWidgets(self):
+        self.configure(background="#3b3b3b")
         self.uploadFileButton = tk.Button(
-            self, text='Upload Image', command=self.uploadFileCommand)
+            self, text='Upload Image', bg='#585858', fg='white', command=self.uploadFileCommand)
 
         self.uploadFileButton.grid(row=1, column=1)
 
@@ -53,7 +54,6 @@ class UploadFileFrame(tk.Frame):
         self.image = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
         fig, (ax) = plt.subplots(1, 1)
         self.ax = ax
-        fig.suptitle('Selected Image :')
         fig.set_size_inches(6, 4)
         ax.spines['bottom'].set_color('white')
         ax.spines['top'].set_color('#3b3b3b')
