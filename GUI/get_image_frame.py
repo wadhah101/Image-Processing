@@ -88,8 +88,8 @@ class UploadFileFrame(tk.Frame):
 
     def apply_noise(self):
         flat_noisy_image = np.array([rand_helper(i)
-                                     for i in self.image.image.flatten()])
-        a = flat_noisy_image.reshape(self.image.image.shape)
+                                     for i in self.image.flatten()])
+        a = flat_noisy_image.reshape(self.image.shape)
         self.set_image(a)
 
     def mean_filter(self, w=1):
