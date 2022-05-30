@@ -28,8 +28,9 @@ class UploadFileSegFrame(tk.Frame):
         self.filename = ""
 
     def createWidgets(self):
+        self.configure(background="#3b3b3b")
         self.uploadFileButton = tk.Button(
-            self, text='Upload Image', command=self.uploadFileCommand)
+            self, text='Upload Image', command=self.uploadFileCommand, bg='#585858', fg='white',)
 
         self.uploadFileButton.grid(row=0, column=0)
 
@@ -53,7 +54,6 @@ class UploadFileSegFrame(tk.Frame):
         ax.tick_params(axis='y', colors='white')
         ax.title.set_color('white')
 
-        fig.suptitle('Selected Image :')
         fig.set_size_inches(4, 4)
         ax.imshow(self.image)
         canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.

@@ -137,7 +137,6 @@ class SegmentationUtilsFrame(Frame):
     def init_plot(self):
         fig, (ax) = plt.subplots(1, 1)
         self.ax = ax
-        fig.suptitle('Selected Image :')
         fig.set_size_inches(4, 3)
         ax.spines['bottom'].set_color('white')
         ax.spines['top'].set_color('#3b3b3b')
@@ -161,8 +160,9 @@ class SegmentationUtilsFrame(Frame):
         return
 
     def create_widgets(self):
+        self.configure(background="#3b3b3b")
         # otsu button
-        otsu_frame = LabelFrame(self, borderwidth=0)
+        otsu_frame = LabelFrame(self, borderwidth=0, bg="#3b3b3b")
         otsu_frame.grid(row=0, column=0)
 
         otsu_button = Button(otsu_frame, text='Otsu thresholds',
@@ -200,7 +200,7 @@ class SegmentationUtilsFrame(Frame):
         OR_button.grid(row=0, column=1)
 
         # Morphological operations
-        morph_buttons = LabelFrame(self, borderwidth=0)
+        morph_buttons = LabelFrame(self, borderwidth=0, bg="#3b3b3b")
         morph_buttons.grid(row=0, column=1)
 
         erosion = Button(morph_buttons, text='erosion', command=self.erosion)
