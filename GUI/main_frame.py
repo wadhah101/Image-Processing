@@ -7,7 +7,7 @@ from GUI.segmentation_frame import SegmentationFrame
 if __name__ == '__main__':
     root = Tk()
     root.title('Image Processor')
-    root.geometry("800x400")
+    root.geometry("1200x600")
 
     s = ttk.Style()
     s.configure('TFrame', background='#3b3b3b')

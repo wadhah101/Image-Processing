@@ -54,7 +54,15 @@ class UploadFileFrame(tk.Frame):
         fig, (ax) = plt.subplots(1, 1)
         self.ax = ax
         fig.suptitle('Selected Image :')
-        fig.set_size_inches(4, 2.4)
+        fig.set_size_inches(6, 4)
+        ax.spines['bottom'].set_color('white')
+        ax.spines['top'].set_color('#3b3b3b')
+        ax.spines['right'].set_color('#3b3b3b')
+        ax.spines['left'].set_color('white')
+        ax.tick_params(axis='x', colors='white')
+        ax.tick_params(axis='y', colors='white')
+        ax.title.set_color('white')
+
         ax.imshow(self.image, cmap='gray', vmin=0, vmax=255)
         fig.set_facecolor('#3b3b3b')
         canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.

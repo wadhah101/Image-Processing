@@ -40,10 +40,10 @@ class OverviewFrame(ttk.Frame):
         self.histogram.grid(row=0, column=1)
 
     def __init__(self, root):
-        super().__init__(root, width=800, height=400)
+        super().__init__(root, width=1200, height=600)
 
         header = LabelFrame(self, font=('Raleway', 25),
-                            width=800, height=100, bg='#585858')
+                            width=1200, height=100, bg='#585858')
         header.grid_propagate(False)
         header.grid(row=0)
 
@@ -122,8 +122,8 @@ class OverviewFrame(ttk.Frame):
                               padx=20)
         noise_button.grid(row=1, sticky=W)
 
-        self.body = LabelFrame(self, font=('Raleway', 25), width=800,
-                               height=300, bg='#3b3b3b', borderwidth=0)
+        self.body = LabelFrame(self, font=('Raleway', 25), width=1200,
+                               height=500, bg='#3b3b3b', borderwidth=0)
         self.body.grid_propagate(False)
         self.body.grid(row=2)
 
