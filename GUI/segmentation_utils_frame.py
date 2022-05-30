@@ -91,6 +91,10 @@ class SegmentationUtilsFrame(Frame):
         return
 
     def create_widgets(self):
+        # otsu button
+        otsu_button = Button(self, text='Otsu thresholds')
+        otsu_button.grid(row=0)
+
         # sliders
         self.r_slider = Scale(self, from_=0, to=256, orient=HORIZONTAL)
         self.r_slider.grid(row=1)
