@@ -10,14 +10,15 @@ class SegmentationFrame(ttk.Frame):
     def image_change_handler(self, image):
         print('image handler lauched')
         self.histogram = HistogramRGBFrame(
-            self.body, image)
-        self.histogram.grid(column=2)
+            self, image)
+        self.histogram.grid(row=0, column=3)
 
     def __init__(self, root):
         super().__init__(root, width=1200, height=600)
 
         self.histogram = None
-        image = UploadFileSegFrame(self)
+        image = UploadFileSegFrame(
+            self,  image_change_handler=self.image_change_handler)
         image.grid(row=0, column=0)
 
         utils = SegmentationUtilsFrame(self)
