@@ -31,7 +31,7 @@ class HistogramFrame(tk.Frame):
 
     def createWidgets(self):
         fig, (ax) = plt.subplots(1, 1)
-        fig.set_size_inches(5, 5)
+        fig.set_size_inches(4, 2)
         histogram = self.get_histogram(self.image)
         ax.plot(range(256), histogram)
         canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.

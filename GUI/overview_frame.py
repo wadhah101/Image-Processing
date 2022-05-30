@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from GUI.histogram_frame import HistogramFrame
 
 from GUI.get_image_frame import UploadFileFrame
 
@@ -33,7 +34,10 @@ class OverviewFrame(ttk.Frame):
         self.image.apply_noise()
 
     def image_change_hanlder(self, image):
-        print("yolo")
+        print("he")
+        self.histogram = HistogramFrame(
+            self.body, image)
+        self.histogram.grid(row=0, column=1)
 
     def __init__(self, root):
         super().__init__(root, width=800, height=400)
@@ -78,10 +82,12 @@ class OverviewFrame(ttk.Frame):
         self.variable = StringVar(type_frame)
         self.variable.set(self.options[0])
 
-        drop_down = OptionMenu(type_frame, self.variable, *self.options, command=self.select_filter)
+        drop_down = OptionMenu(type_frame, self.variable,
+                               *self.options, command=self.select_filter)
         drop_down.grid(row=0, column=1)
 
-        dimension_frame = LabelFrame(filters_frame, borderwidth=0, bg='#585858')
+        dimension_frame = LabelFrame(
+            filters_frame, borderwidth=0, bg='#585858')
         dimension_frame.grid(row=2, pady=5, sticky=W)
 
         dimension_text = Label(
@@ -100,7 +106,8 @@ class OverviewFrame(ttk.Frame):
         space1 = Label(dimension_frame, text='', fg='white', bg='#585858')
         space1.grid(row=1, column=3)
 
-        filter_button = Button(dimension_frame, text='Go', bg='#828282', fg='white', command=self.filter)
+        filter_button = Button(dimension_frame, text='Go',
+                               bg='#828282', fg='white', command=self.filter)
         filter_button.grid(row=1, column=4)
 
         # noise section
@@ -115,11 +122,11 @@ class OverviewFrame(ttk.Frame):
                               padx=20)
         noise_button.grid(row=1, sticky=W)
 
-        body = LabelFrame(self, font=('Raleway', 25), width=800,
-                          height=300, bg='#3b3b3b', borderwidth=0)
-        body.grid_propagate(False)
-        body.grid(row=2)
+        self.body = LabelFrame(self, font=('Raleway', 25), width=800,
+                               height=300, bg='#3b3b3b', borderwidth=0)
+        self.body.grid_propagate(False)
+        self.body.grid(row=2)
 
         self.image = UploadFileFrame(
-            body, image_change_hanlder=self.image_change_hanlder)
+            self.body, image_change_hanlder=self.image_change_hanlder)
         self.image.grid(row=0, column=0)
