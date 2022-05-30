@@ -55,10 +55,10 @@ class HistogramFrame(tk.Frame):
         canvas.get_tk_widget().grid(row=1, column=1)
 
 
-# img = cv2.imread("./cat.jpg", cv2.IMREAD_GRAYSCALE)
-
+# img = cv2.imread("../cat.jpg", cv2.IMREAD_GRAYSCALE)
+#
 # root = tk.Tk()
 # hc = HistogramFrame(root, img)
 # hc.pack(side="top")
-
+#
 # root.mainloop()
