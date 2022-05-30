@@ -66,22 +66,6 @@ def image_seuil_or(image: np.ndarray, r, g, b):
     return result.astype('uint8')
 
 
-def erosion(binary_image: np.ndarray, kernel: np.ndarray):
-    return cv2.erode(binary_image, kernel, iterations=1)
-
-
-def dilatation(binary_img: np.ndarray, kernel: np.ndarray):
-    return cv2.dilate(binary_img, kernel, iterations=1)
-
-
-def fermeture(binary_image: np.ndarray, kernel: np.ndarray):
-    return erosion(dilatation(binary_img, kernel))
-
-
-def ouverture(binary_image: np.ndarray, kernel: np.ndarray):
-    return dilatation(erosion(binary_img, kernel))
-
-
 class SegmentationUtilsFrame(Frame):
 
     kernel = np.ones((5, 5), np.uint8)
