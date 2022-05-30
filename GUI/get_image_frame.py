@@ -61,11 +61,13 @@ class UploadFileFrame(tk.Frame):
         canvas.draw()
         self.canvas = canvas
         canvas.get_tk_widget().grid(row=2, column=1)
+        self.image_change_hanlder(self.image)
 
     def set_image(self, newimg: np.ndarray):
         self.image = newimg.astype("uint8")
         self.ax.imshow(newimg, cmap='gray', vmin=0, vmax=255)
         self.canvas.draw()
+        self.image_change_hanlder(self.image)
 
     def linear_transform(self):
         img = self.image
