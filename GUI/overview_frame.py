@@ -36,6 +36,9 @@ class OverviewFrame(ttk.Frame):
 
     options = ['choose filter', 'median', 'moyenneur']
 
+    def image_change_hanlder(self, image):
+        print("yolo")
+
     def __init__(self, root):
         super().__init__(root, width=800, height=400)
 
@@ -112,5 +115,6 @@ class OverviewFrame(ttk.Frame):
         body.grid_propagate(False)
         body.grid(row=2)
 
-        self.image = UploadFileFrame(body)
+        self.image = UploadFileFrame(
+            body, image_change_hanlder=self.image_change_hanlder)
         self.image.grid(row=0, column=0)
