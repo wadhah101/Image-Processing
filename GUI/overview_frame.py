@@ -1,8 +1,8 @@
 from tkinter import *
 from tkinter import ttk
-from GUI.histogram_frame import HistogramFrame
 
 from GUI.get_image_frame import UploadFileFrame
+from GUI.histogram_frame import HistogramFrame
 
 
 class OverviewFrame(ttk.Frame):
