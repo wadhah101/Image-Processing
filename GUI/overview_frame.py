@@ -1,38 +1,18 @@
 from tkinter import *
 from tkinter import ttk
-import numpy as np
-import random
-import cv2
-
 
 from GUI.get_image_frame import UploadFileFrame
 
 
-def rand_helper(i):
-    a = random.randint(0, 20)
-    if a == 20:
-        return 255
-    elif a == 0:
-        return 0
-    else:
-        return i
-
-
 class OverviewFrame(ttk.Frame):
     def equalize(self):
-        equ = cv2.equalizeHist(self.image.image)
-        self.image.set_image(equ)
+        self.image.equalize()
 
     def linear_transform(self):
-        print('linear transformation ..')
+        self.image.linear_transform()
 
     def apply_noise(self):
-
-        flat_noisy_image = np.array([rand_helper(i)
-                                    for i in self.image.image.flatten()])
-        a = flat_noisy_image.reshape(self.image.image.shape)
-        self.image.set_image(a)
-        print('making noise ..')
+        self.image.apply_noise()
 
     options = ['choose filter', 'median', 'moyenneur']
 

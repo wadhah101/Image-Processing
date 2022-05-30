@@ -13,11 +13,18 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
                                                NavigationToolbar2Tk)
 from matplotlib.figure import Figure
 
-from tp1 import rand_helper
+
+def rand_helper(i):
+    a = random.randint(0, 20)
+    if a == 20:
+        return 255
+    elif a == 0:
+        return 0
+    else:
+        return i
 
 
 class UploadFileFrame(tk.Frame):
-
     filetypes = (
         ('jpgs', '*.jpg'),
         ('pngs', '*.pngs'),
@@ -47,6 +54,7 @@ class UploadFileFrame(tk.Frame):
         fig.suptitle('Selected Image :')
         fig.set_size_inches(4, 2.4)
         ax.imshow(self.image, cmap='gray', vmin=0, vmax=255)
+        fig.set_facecolor('#3b3b3b')
         canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.
         canvas.draw()
         canvas.get_tk_widget().grid(row=2, column=1)
@@ -58,6 +66,7 @@ class UploadFileFrame(tk.Frame):
         fig.suptitle('Selected Image :')
         fig.set_size_inches(4, 2.4)
         ax.imshow(newimg, cmap='gray', vmin=0, vmax=255)
+        fig.set_facecolor('#3b3b3b')
         canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.
         canvas.draw()
         canvas.get_tk_widget().grid(row=2, column=1)
@@ -74,16 +83,16 @@ class UploadFileFrame(tk.Frame):
 
     def apply_noise(self):
         flat_noisy_image = np.array([rand_helper(i)
-                                    for i in self.image.image.flatten()])
+                                     for i in self.image.image.flatten()])
         a = flat_noisy_image.reshape(self.image.image.shape)
         self.set_image(a)
 
     def mean_filter(self, w=1):
         image = self.image
         filtered = image.copy()
-        for i in range(w, image.shape[0]-w):
-            for j in range(w, image.shape[1]-w):
-                block = image[i-w:i+w+1, j-w:j+w+1]
+        for i in range(w, image.shape[0] - w):
+            for j in range(w, image.shape[1] - w):
+                block = image[i - w:i + w + 1, j - w:j + w + 1]
                 mean_result = np.mean(block, dtype=np.float32)
                 filtered[i][j] = int(mean_result)
         self.set_image(filtered)
@@ -91,14 +100,13 @@ class UploadFileFrame(tk.Frame):
     def median_filter(self, w=1):
         image = self.image
         filtered = self.copy()
-        for i in range(w, image.shape[0]-w):
-            for j in range(w, image.shape[1]-w):
-                block: np.ndarray = image[i-w:i+w+1, j-w:j+w+1]
+        for i in range(w, image.shape[0] - w):
+            for j in range(w, image.shape[1] - w):
+                block: np.ndarray = image[i - w:i + w + 1, j - w:j + w + 1]
                 flat_sorted_block = np.sort(block.flatten())
                 median_value = flat_sorted_block[4]
                 filtered[i][j] = int(median_value)
         self.set_image(filtered)
-
 
 # root = tk.Tk()
 # hc = UploadFileFrame(root)
