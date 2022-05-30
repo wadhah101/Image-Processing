@@ -5,6 +5,24 @@ from GUI.get_image_frame import UploadFileFrame
 
 
 class OverviewFrame(ttk.Frame):
+    options = ['choose filter', 'median', 'mean']
+
+    def validate(self, p):
+        if str.isdigit(p) or p == "":
+            return True
+        else:
+            return False
+
+    def select_filter(self, event):
+        if self.variable.get() != self.options[0]:
+            self.dimension.configure(state='normal')
+
+    def filter(self):
+        if self.variable.get() == self.options[1]:
+            self.image.median_filter(self.dimension.get())
+        elif self.variable.get() == self.options[2]:
+            self.image.mean_filter(self.dimension.get())
+
     def equalize(self):
         self.image.equalize()
 
@@ -13,8 +31,6 @@ class OverviewFrame(ttk.Frame):
 
     def apply_noise(self):
         self.image.apply_noise()
-
-    options = ['choose filter', 'median', 'moyenneur']
 
     def image_change_hanlder(self, image):
         print("yolo")
@@ -59,13 +75,13 @@ class OverviewFrame(ttk.Frame):
         type_text = Label(type_frame, text='Type:', fg='white', bg='#585858')
         type_text.grid(row=0, column=0)
 
-        variable = StringVar(type_frame)
-        variable.set(self.options[0])
+        self.variable = StringVar(type_frame)
+        self.variable.set(self.options[0])
 
-        drop_down = OptionMenu(type_frame, variable, *self.options)
+        drop_down = OptionMenu(type_frame, self.variable, *self.options, command=self.select_filter)
         drop_down.grid(row=0, column=1)
 
-        dimension_frame = LabelFrame(filters_frame, borderwidth=0)
+        dimension_frame = LabelFrame(filters_frame, borderwidth=0, bg='#585858')
         dimension_frame.grid(row=2, pady=5, sticky=W)
 
         dimension_text = Label(
@@ -75,12 +91,21 @@ class OverviewFrame(ttk.Frame):
         space = Label(dimension_frame, text='', fg='white', bg='#585858')
         space.grid(row=1, column=1)
 
-        dimension = Entry(dimension_frame, width=10)
-        dimension.grid(row=1, column=2)
+        vcmd = (self.register(self.validate))
+
+        self.dimension = Entry(dimension_frame, width=10, state='disabled', validate='all',
+                               validatecommand=(vcmd, '%P'))
+        self.dimension.grid(row=1, column=2)
+
+        space1 = Label(dimension_frame, text='', fg='white', bg='#585858')
+        space1.grid(row=1, column=3)
+
+        filter_button = Button(dimension_frame, text='Go', bg='#828282', fg='white', command=self.filter)
+        filter_button.grid(row=1, column=4)
 
         # noise section
         noise_frame = LabelFrame(header, borderwidth=0, bg='#585858')
-        noise_frame.grid(row=0, column=3)
+        noise_frame.grid(row=0, column=3, sticky=E)
 
         noise = Label(noise_frame, text='Noise',
                       fg='white', bg='#585858', pady=5)
