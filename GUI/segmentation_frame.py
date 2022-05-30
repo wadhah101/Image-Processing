@@ -14,7 +14,7 @@ class SegmentationFrame(ttk.Frame):
         self.histogram.grid(column=2)
 
     def __init__(self, root):
-        super().__init__(root, width=800, height=400)
+        super().__init__(root, width=1200, height=600)
 
         self.histogram = None
         image = UploadFileSegFrame(self)
