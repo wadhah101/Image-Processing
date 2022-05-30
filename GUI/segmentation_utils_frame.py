@@ -100,7 +100,7 @@ class SegmentationUtilsFrame(Frame):
             self.transformed_image, self.kernel, iterations=1)
         self.updateCanva()
 
-    def fermeture(slef):
+    def fermeture(self):
         self.erosion()
         self.dilatation()
         self.updateCanva()
