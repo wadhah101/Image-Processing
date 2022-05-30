@@ -1,12 +1,14 @@
-from matplotlib.figure import Figure
-from matplotlib.backend_bases import key_press_handler
-from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)
+import random
 import tkinter
+
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-import random
+from matplotlib.backend_bases import key_press_handler
+from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
+                                               NavigationToolbar2Tk)
+from matplotlib.figure import Figure
+
 img = cv2.imread("./cat.jpg", cv2.IMREAD_GRAYSCALE)
 
 
