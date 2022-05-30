@@ -18,7 +18,7 @@ class UploadFileSegFrame(tk.Frame):
 
     filetypes = (
         ('jpgs', '*.jpg'),
-        ('pngs', '*.pngs'),
+        ('pngs', '*.png'),
     )
 
     def __init__(self, parent, image_change_handler):
