@@ -62,9 +62,8 @@ class UploadFileFrame(tk.Frame):
         image = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
         self.set_image(image)
 
-
     def set_image(self, newimg: np.ndarray):
-        self.image = newimg
+        self.image = newimg.astype("uint8")
         self.image_change_hanlder(newimg)
         print("drawing new image")
         fig, (ax) = plt.subplots(1, 1)
