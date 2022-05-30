@@ -13,6 +13,33 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
 from matplotlib.figure import Figure
 
 
+def class_average(cl, start, end):
+    niv = np.arange(start, end)
+    return np.sum(cl * niv) / np.sum(cl)
+
+
+def get_variance(hist, s):
+    c0 = hist[:s]
+    c1 = hist[s:]
+    pc0 = np.sum(c0) / np.sum(hist)
+    pc1 = np.sum(c1) / np.sum(hist)
+    m = class_average(hist, 0, 255)
+    m0 = class_average(c0, 0, s)
+    m1 = class_average(c1, s, 255)
+    return pc0 * (m0 - m)**2 + pc1 * (m1 - m)**2
+
+
+def otsu_thresholding(hist):
+    max_variance = 0
+    seuil = 0
+    for s in range(1, 254):
+        variance = get_variance(hist, s)
+        if variance > max_variance:
+            max_variance = variance
+            seuil = s
+    return seuil
+
+
 def extract_color_threshold(image: np.ndarray, threshold: int):
     return np.where(image >= threshold, 255, 0)
 
@@ -40,21 +67,35 @@ def image_seuil_or(image: np.ndarray, r, g, b):
 
 
 class SegmentationUtilsFrame(Frame):
-    def update_r_slider(self, event):
+
+    def set_otsu_value(self):
+        img = self.image
+        hist_red = cv2.calcHist([img], [0], None, [256], [0, 256])
+        hist_green = cv2.calcHist([img], [1], None, [256], [0, 256])
+        hist_blue = cv2.calcHist([img], [2], None, [256], [0, 256])
+        otsu_red, otsu_green, otsu_blue = otsu_thresholding(
+            hist_red), otsu_thresholding(hist_green), otsu_thresholding(hist_blue)
+
+        self.r_slider.set(otsu_red)
+        self.g_slider.set(otsu_green)
+        self.b_slider.set(otsu_blue)
+        self.update_plot()
+
+    def update_plot(self):
         self.draw_binary_image(self.variable.get(), self.r_slider.get(),
                                self.g_slider.get(), self.b_slider.get())
+
+    def update_r_slider(self, event):
+        self.update_plot()
 
     def update_g_slider(self, event):
-        self.draw_binary_image(self.variable.get(), self.r_slider.get(),
-                               self.g_slider.get(), self.b_slider.get())
+        self.update_plot()
 
     def update_b_slider(self, event):
-        self.draw_binary_image(self.variable.get(), self.r_slider.get(),
-                               self.g_slider.get(), self.b_slider.get())
+        self.update_plot()
 
     def radio_checked(self):
-        self.draw_binary_image(self.variable.get(), self.r_slider.get(),
-                               self.g_slider.get(), self.b_slider.get())
+        self.update_plot()
 
     def __init__(self, parent, image: np.ndarray):
         super().__init__(parent)
@@ -96,7 +137,8 @@ class SegmentationUtilsFrame(Frame):
 
     def create_widgets(self):
         # otsu button
-        otsu_button = Button(self, text='Otsu thresholds')
+        otsu_button = Button(self, text='Otsu thresholds',
+                             command=self.set_otsu_value)
         otsu_button.grid(row=0)
 
         # sliders
