@@ -21,9 +21,10 @@ class UploadFileSegFrame(tk.Frame):
         ('pngs', '*.pngs'),
     )
 
-    def __init__(self, parent):
+    def __init__(self, parent, image_change_handler):
         super().__init__(parent)
         self.createWidgets()
+        self.image_change_handler = image_change_handler
         self.filename = ""
 
     def createWidgets(self):
@@ -42,12 +43,23 @@ class UploadFileSegFrame(tk.Frame):
     def show_image(self):
         self.image = cv2.imread(self.filename)[:, :, ::-1]
         fig, (ax) = plt.subplots(1, 1)
+        fig.set_facecolor('#3b3b3b')
+        ax.set_facecolor('#3b3b3b')
+        ax.spines['bottom'].set_color('white')
+        ax.spines['top'].set_color('#3b3b3b')
+        ax.spines['right'].set_color('#3b3b3b')
+        ax.spines['left'].set_color('white')
+        ax.tick_params(axis='x', colors='white')
+        ax.tick_params(axis='y', colors='white')
+        ax.title.set_color('white')
+
         fig.suptitle('Selected Image :')
         fig.set_size_inches(4, 4)
         ax.imshow(self.image)
         canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.
         canvas.draw()
         canvas.get_tk_widget().grid(row=1, column=0)
+        self.image_change_handler(self.image)
 
 
 # root = tk.Tk()

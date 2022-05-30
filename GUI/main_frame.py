@@ -10,6 +10,7 @@ if __name__ == '__main__':
     root.geometry("1200x600")
 
     s = ttk.Style()
+
     s.configure('TFrame', background='#3b3b3b')
 
     tabs = ttk.Notebook(root)

@@ -23,16 +23,28 @@ class HistogramRGBFrame(tk.Frame):
 
     def createWidgets(self):
 
+        img = self.image
         hist_red = cv2.calcHist([img], [0], None, [256], [0, 256])
         hist_green = cv2.calcHist([img], [1], None, [256], [0, 256])
         hist_blue = cv2.calcHist([img], [2], None, [256], [0, 256])
 
         fig, (ax) = plt.subplots(1, 1)
         fig.set_size_inches(5, 5)
+        fig.set_facecolor('#3b3b3b')
+        ax.set_facecolor('#3b3b3b')
 
         ax.plot(hist_red, color='r')
         ax.plot(hist_green, color='g')
         ax.plot(hist_blue, color='b')
+
+        ax.spines['bottom'].set_color('white')
+        ax.spines['top'].set_color('#3b3b3b')
+        ax.spines['right'].set_color('#3b3b3b')
+        ax.spines['left'].set_color('white')
+        ax.tick_params(axis='x', colors='white')
+        ax.tick_params(axis='y', colors='white')
+        ax.title.set_color('white')
+
         ax.relim([0, 256])
         canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.
         canvas.draw()
