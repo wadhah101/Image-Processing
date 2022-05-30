@@ -26,7 +26,7 @@ def get_variance(hist, s):
     m = class_average(hist, 0, 255)
     m0 = class_average(c0, 0, s)
     m1 = class_average(c1, s, 255)
-    return pc0 * (m0 - m)**2 + pc1 * (m1 - m)**2
+    return pc0 * (m0 - m) ** 2 + pc1 * (m1 - m) ** 2
 
 
 def otsu_thresholding(hist):
@@ -46,7 +46,7 @@ def extract_color_threshold(image: np.ndarray, threshold: int):
 
 def image_seuil_and(image: np.ndarray, r, g, b):
     red_channel, green_channel, blue_channel = image[:,
-                                                     :, 2],  image[:, :, 1], image[:, :, 0]
+                                               :, 2], image[:, :, 1], image[:, :, 0]
     image_seuil_red = extract_color_threshold(red_channel, r)
     image_seuil_green = extract_color_threshold(green_channel, g)
     image_seuil_blue = extract_color_threshold(blue_channel, b)
@@ -57,7 +57,7 @@ def image_seuil_and(image: np.ndarray, r, g, b):
 
 def image_seuil_or(image: np.ndarray, r, g, b):
     red_channel, green_channel, blue_channel = image[:,
-                                                     :, 2],  image[:, :, 1], image[:, :, 0]
+                                               :, 2], image[:, :, 1], image[:, :, 0]
     image_seuil_red = extract_color_threshold(red_channel, r)
     image_seuil_green = extract_color_threshold(green_channel, g)
     image_seuil_blue = extract_color_threshold(blue_channel, b)
@@ -124,10 +124,9 @@ class SegmentationUtilsFrame(Frame):
         canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.
         canvas.draw()
         self.canvas = canvas
-        canvas.get_tk_widget().grid(row=5, column=0, columnspan=1)
+        canvas.get_tk_widget().grid(row=2, column=0, columnspan=2)
 
-    def draw_binary_image(self, method: str,  r: int, g: int, b: int):
-
+    def draw_binary_image(self, method: str, r: int, g: int, b: int):
         self.transformed_image = image_seuil_and(
             self.image, r, g, b) if method == "AND" else image_seuil_or(self.image, r, g, b)
 
@@ -137,28 +136,31 @@ class SegmentationUtilsFrame(Frame):
 
     def create_widgets(self):
         # otsu button
-        otsu_button = Button(self, text='Otsu thresholds',
+        otsu_frame = LabelFrame(self, borderwidth=0)
+        otsu_frame.grid(row=0, column=0)
+
+        otsu_button = Button(otsu_frame, text='Otsu thresholds',
                              command=self.set_otsu_value)
-        otsu_button.grid(row=0)
+        otsu_button.grid(row=0, column=0)
 
         # sliders
-        self.r_slider = Scale(self, from_=0, to=256, orient=HORIZONTAL)
-        self.r_slider.grid(row=1)
+        self.r_slider = Scale(otsu_frame, from_=0, to=256, orient=HORIZONTAL)
+        self.r_slider.grid(row=1, column=0)
 
         self.r_slider.bind("<ButtonRelease-1>", self.update_r_slider)
 
-        self.g_slider = Scale(self, from_=0, to=256, orient=HORIZONTAL)
-        self.g_slider.grid(row=2)
+        self.g_slider = Scale(otsu_frame, from_=0, to=256, orient=HORIZONTAL)
+        self.g_slider.grid(row=2, column=0)
 
         self.g_slider.bind("<ButtonRelease-1>", self.update_g_slider)
 
-        self.b_slider = Scale(self, from_=0, to=256, orient=HORIZONTAL)
-        self.b_slider.grid(row=3)
+        self.b_slider = Scale(otsu_frame, from_=0, to=256, orient=HORIZONTAL)
+        self.b_slider.grid(row=3, column=0)
 
         self.b_slider.bind("<ButtonRelease-1>", self.update_b_slider)
 
-        switch_frame = LabelFrame(self)
-        switch_frame.grid(row=4)
+        switch_frame = LabelFrame(otsu_frame)
+        switch_frame.grid(row=4, column=0)
         self.init_plot()
 
         self.variable = StringVar(None, "AND")
@@ -170,6 +172,22 @@ class SegmentationUtilsFrame(Frame):
 
         AND_button.grid(row=0, column=0)
         OR_button.grid(row=0, column=1)
+
+        # Morphological operations
+        morph_buttons = LabelFrame(self, borderwidth=0)
+        morph_buttons.grid(row=0, column=1)
+
+        erosion = Button(morph_buttons, text='erosion')
+        erosion.grid(row=0, column=1, pady=5)
+
+        dilatation = Button(morph_buttons, text='dilatation')
+        dilatation.grid(row=1, column=1, pady=5)
+
+        ouverture = Button(morph_buttons, text='ouverture')
+        ouverture.grid(row=2, column=1, pady=5)
+
+        fermeture = Button(morph_buttons, text='fermeture')
+        fermeture.grid(row=3, column=1, pady=5)
 
         # def uploadFileCommand(self):
         #     self.filename = fd.askopenfilename(
