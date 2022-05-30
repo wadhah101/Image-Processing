@@ -41,7 +41,7 @@ def otsu_thresholding(hist):
 
 
 def extract_color_threshold(image: np.ndarray, threshold: int):
-    return np.where(image >= threshold, 255, 0)
+    return np.where(image < threshold, 255, 0)
 
 
 def image_seuil_and(image: np.ndarray, r, g, b):
