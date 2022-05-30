@@ -27,7 +27,7 @@ def rand_helper(i):
 class UploadFileFrame(tk.Frame):
     filetypes = (
         ('jpgs', '*.jpg'),
-        ('pngs', '*.pngs'),
+        ('pngs', '*.png'),
     )
 
     def __init__(self, parent, image_change_hanlder):
