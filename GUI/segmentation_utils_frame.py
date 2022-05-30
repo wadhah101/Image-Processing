@@ -41,16 +41,20 @@ def image_seuil_or(image: np.ndarray, r, g, b):
 
 class SegmentationUtilsFrame(Frame):
     def update_r_slider(self, event):
-        print(int(self.r_slider.get()))
+        self.draw_binary_image(self.variable.get(), self.r_slider.get(),
+                               self.g_slider.get(), self.b_slider.get())
 
     def update_g_slider(self, event):
-        print(int(self.g_slider.get()))
+        self.draw_binary_image(self.variable.get(), self.r_slider.get(),
+                               self.g_slider.get(), self.b_slider.get())
 
     def update_b_slider(self, event):
-        print(int(self.b_slider.get()))
+        self.draw_binary_image(self.variable.get(), self.r_slider.get(),
+                               self.g_slider.get(), self.b_slider.get())
 
     def radio_checked(self):
-        print(self.variable.get())
+        self.draw_binary_image(self.variable.get(), self.r_slider.get(),
+                               self.g_slider.get(), self.b_slider.get())
 
     def __init__(self, parent, image: np.ndarray):
         super().__init__(parent)
@@ -59,9 +63,9 @@ class SegmentationUtilsFrame(Frame):
         self.r_slider = None
         self.variable = None
         self.image = image
-        self.create_widgets()
         self.canvas = None
         self.transformed_image = None
+        self.create_widgets()
 
     def init_plot(self):
         fig, (ax) = plt.subplots(1, 1)
