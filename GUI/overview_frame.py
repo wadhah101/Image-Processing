@@ -34,7 +34,7 @@ class OverviewFrame(ttk.Frame):
         self.image.apply_noise()
 
     def image_change_hanlder(self, image):
-        print("he")
+        print('image handler lauched')
         self.histogram = HistogramFrame(
             self.body, image)
         self.histogram.grid(row=0, column=1)

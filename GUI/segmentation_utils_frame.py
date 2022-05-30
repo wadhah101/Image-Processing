@@ -20,7 +20,7 @@ class SegmentationUtilsFrame(tk.Frame):
         super().__init__(parent)
         self.createWidgets()
 
-    def createWidgets(self):
+    def create_widgets(self):
         # sliders
         self.r_slider = tk.Scale(self, from_=0, to=256, orient=tk.HORIZONTAL)
         self.r_slider.grid(row=1)
@@ -48,8 +48,8 @@ class SegmentationUtilsFrame(tk.Frame):
         #     canvas.get_tk_widget().grid(row=2, column=1)
 
 
-root = tk.Tk()
-hc = SegmentationUtilsFrame(root)
-hc.pack(side="top")
-
-root.mainloop()
+# root = tk.Tk()
+# hc = SegmentationUtilsFrame(root)
+# hc.pack(side="top")
+#
+# root.mainloop()
