@@ -13,7 +13,15 @@ from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
                                                NavigationToolbar2Tk)
 from matplotlib.figure import Figure
 
-from tp1 import rand_helper
+
+def rand_helper(i):
+    a = random.randint(0, 20)
+    if a == 20:
+        return 255
+    elif a == 0:
+        return 0
+    else:
+        return i
 
 
 class UploadFileFrame(tk.Frame):
