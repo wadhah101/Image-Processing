@@ -19,9 +19,9 @@ class OverviewFrame(ttk.Frame):
 
     def filter(self):
         if self.variable.get() == self.options[1]:
-            self.image.median_filter(self.dimension.get())
+            self.image.median_filter(int(self.dimension.get()))
         elif self.variable.get() == self.options[2]:
-            self.image.mean_filter(self.dimension.get())
+            self.image.mean_filter(int(self.dimension.get()))
 
     def equalize(self):
         self.image.equalize()
