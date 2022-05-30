@@ -23,10 +23,11 @@ class UploadFileFrame(tk.Frame):
         ('pngs', '*.pngs'),
     )
 
-    def __init__(self, parent):
+    def __init__(self, parent, image_change_hanlder):
         super().__init__(parent)
         self.createWidgets()
         self.filename = ""
+        self.image_change_hanlder = image_change_hanlder
 
     def createWidgets(self):
         self.uploadFileButton = tk.Button(
@@ -39,20 +40,12 @@ class UploadFileFrame(tk.Frame):
             title='Open a file',
             initialdir='~',
             filetypes=self.filetypes)
-        self.show_image()
-
-    def show_image(self):
-        self.image = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
-        fig, (ax) = plt.subplots(1, 1)
-        fig.suptitle('Selected Image :')
-        fig.set_size_inches(4, 2.4)
-        ax.imshow(self.image, cmap='gray', vmin=0, vmax=255)
-        canvas = FigureCanvasTkAgg(fig, master=self)  # A tk.DrawingArea.
-        canvas.draw()
-        canvas.get_tk_widget().grid(row=2, column=1)
+        image = cv2.imread(self.filename, cv2.IMREAD_GRAYSCALE)
+        self.set_image(image)
 
     def set_image(self, newimg: np.ndarray):
         self.image = newimg
+        self.image_change_hanlder(newimg)
         print("drawing new image")
         fig, (ax) = plt.subplots(1, 1)
         fig.suptitle('Selected Image :')
@@ -90,7 +83,7 @@ class UploadFileFrame(tk.Frame):
 
     def median_filter(self, w=1):
         image = self.image
-        filtered = self.copy()
+        filtered = image.copy()
         for i in range(w, image.shape[0]-w):
             for j in range(w, image.shape[1]-w):
                 block: np.ndarray = image[i-w:i+w+1, j-w:j+w+1]
